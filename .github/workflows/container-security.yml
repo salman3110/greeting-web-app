@@ -1,0 +1,48 @@
+name: Container Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # push to GHCR
+    env:
+      IMAGE: ghcr.io/${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build image
+        run: docker build -t webapp:${{github.sha}}
+
+      - name: Lint Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+
+
+      - name: Scan image for vulnerabilities
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ${{ env.IMAGE }}:scan
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: "1"
+
+      - name: Save Trivy report for the upload job
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+            name: trivy-results
+            path: trivy-results.sarif
+            if-no-files-found: ignore
+            retention-days: 30
+
+   

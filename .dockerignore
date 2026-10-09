@@ -1,0 +1,24 @@
+.git
+.gitignore
+.github
+.idea
+*.iml
+.DS_Store
+
+# Docs and repo metadata are not needed in the image
+*.md
+LICENSE
+.markdownlint-cli2.yaml
+markdownlint-cli2-codequality.json
+
+# Python artefacts
+**/__pycache__
+**/*.pyc
+.venv
+venv
+
+# Don't send the Dockerfile itself or local env files into the build context
+Dockerfile
+.dockerignore
+.env
+.env.*
