@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Lint Dockerfile
         run: docker run --rm -i hadolint/hadolint:v2.15.1-alpine < Dockerfile
