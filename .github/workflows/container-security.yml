@@ -27,6 +27,8 @@ jobs:
         with:
           dockerfile: Dockerfile
 
+      - name: Smoke test container
+        run: ./scripts/container-smoke-test.sh "${LOCAL_IMAGE}"
 
       - name: Scan image for vulnerabilities
         uses: aquasecurity/trivy-action@0.28.0
