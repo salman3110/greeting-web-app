@@ -1,11 +1,10 @@
 ARG PYTHON_VERSION=3.12
 
 # Build image and dependencies
-FROM python:${PYTHON_VERSION}-slim AS builder
-
+FROM python:${PYTHON_VERSION}-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 AS builder
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PYTHONDONTWRITEBYTECODE=1
-
+# Python virtual environment is created in /opt/venv to isolate the application dependencies from the system Python packages.
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:${PATH}"
 
@@ -15,7 +14,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r requirements.txt
 
 # Minimal runtime production image
-FROM python:${PYTHON_VERSION}-slim AS production
+FROM python:${PYTHON_VERSION}-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 AS production
 
 LABEL org.opencontainers.image.title="greeting-web-app" \
       org.opencontainers.image.description="Minimal Flask greeting application served by Gunicorn" \
