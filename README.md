@@ -105,5 +105,4 @@ to `main`:
 4.  Scans the image with Trivy and fails on fixable HIGH or CRITICAL
     vulnerabilities.
 
-Dependabot (`.github/dependabot.yml`) keeps the base image, Python
-dependencies and GitHub Actions up to date.
+Dependabot (`.github/dependabot.yml`) keeps the base image and GitHub Actions up to date.
