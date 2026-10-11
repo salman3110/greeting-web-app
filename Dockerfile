@@ -1,12 +1,10 @@
 ARG PYTHON_VERSION=3.12
 
 # Build image and dependencies
-FROM python:${PYTHON_VERSION}-slim AS builder
-
+FROM python:${PYTHON_VERSION}-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 AS builder
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PYTHONDONTWRITEBYTECODE=1
-
-RUN python -m venv /opt/venv
+# Python virtual environment is created in /opt/venv to isolate the application dependencies from the system Python packages.
 ENV PATH="/opt/venv/bin:${PATH}"
 
 WORKDIR /build
