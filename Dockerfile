@@ -4,7 +4,7 @@ ARG PYTHON_VERSION=3.12
 FROM python:${PYTHON_VERSION}-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 AS builder
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PYTHONDONTWRITEBYTECODE=1
-# Python virtual environment is created in /opt/venv to isolate the application dependencies from the system Python packages. The PATH environment variable is updated to include the virtual environment's bin directory, ensuring that the installed packages are used when running the application.
+# Python virtual environment is created in /opt/venv to isolate the application dependencies from the system Python packages.
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:${PATH}"
 
